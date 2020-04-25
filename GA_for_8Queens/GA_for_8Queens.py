@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Genetic Algorithm to solve 8 Queens problem
+unfinished, to be continue...
 """
 
 import numpy as np
@@ -49,11 +50,6 @@ class GA8Queen:
             self.all_state.append(pop[position])
 
         pop_copy = pop.copy()
-        # for parent in pop:  # for every parent
-        #     child = self.crossover(parent, pop_copy)
-        #     child = self.mutate(child)
-        #     parent[:] = child
-        # self.pop = pop
 
 
 
