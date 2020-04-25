@@ -31,7 +31,7 @@ class GA8Queen:
 
     def tournament(self, tournament_size):
         # use tournament method to find the fittest state from a sub-population
-        all_parent = []
+        all_parents = []
         all_fitness = []
         for i in range(self.pop_size):
             contenders = np.random.randint(0, self.pop_size, tournament_size)
@@ -39,17 +39,18 @@ class GA8Queen:
             parent_index = contenders[np.argmin(fitness)]
             parent = self.pop[parent_index]
             parent_fitness = np.min(fitness)
-            all_parent.append(parent)
+            all_parents.append(parent)
             all_fitness.append(parent_fitness)
-        return all_parent, all_fitness
+        return np.array(all_parents), np.array(all_fitness)
 
     def evolve(self, tournament_size):
-        pop, fitness = self.tournament(tournament_size)
+        all_parents, fitness = self.tournament(tournament_size)
         if 0 in fitness:
-            position = fitness.index(0)
-            self.all_state.append(pop[position])
-
-        pop_copy = pop.copy()
+            zero_position = [i for i, v in enumerate(fitness) if v == 0]
+            perfect_state = np.unique(all_parents[zero_position], axis=0)
+            self.all_state.append(perfect_state)
+            all_parents = np.delete(all_parents, zero_position, axis=0)
+            print(len(all_parents))
 
 
 
