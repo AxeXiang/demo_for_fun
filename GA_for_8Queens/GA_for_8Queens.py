@@ -51,9 +51,11 @@ class GA8Queen:
             for one_state in perfect_state:
                 if one_state not in self.all_state:
                     self.all_state.append(one_state)
-            all_parents = np.delete(all_parents, zero_position, axis=0)
-            add_pop = np.vstack([np.random.permutation(self.queen_number) for _ in range(len(zero_position))])
-            all_parents = np.append(all_parents, add_pop, axis=0)
+                else:
+                    all_parents = np.delete(all_parents, one_state, axis=0)
+                    add_pop = np.vstack([np.random.permutation(self.queen_number) for _ in
+                                        range(self.pop_size - len(all_parents))])
+                    all_parents = np.append(all_parents, add_pop, axis=0)
         return all_parents
 
     def crossover(self, parent, all_parents):
@@ -86,4 +88,4 @@ class GA8Queen:
 
 
 if __name__ == '__main__':
-    GA8Queen(queen_number=6, pop_size=1000, cross_rate=0.1, mutate_rate=0.4).evolve(20, 200)
+    GA8Queen(queen_number=8, pop_size=200, cross_rate=0.2, mutate_rate=0.5).evolve(20, 1000)
