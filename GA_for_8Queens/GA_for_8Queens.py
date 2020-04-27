@@ -16,6 +16,15 @@ class GA8Queen:
         self.mutate_rate = mutate_rate
         self.pop = np.vstack([np.random.permutation(queen_number) for _ in range(pop_size)])
         self.all_state = []
+        """
+        Args:
+            queen_number: size of chess and number of queens
+            pop_size: number of parents
+            cross_rate: crossover rate
+            mutate_rate: mutate rate
+            pop: initial parents
+            all_state: the no attack state
+        """
 
     def get_fitness(self, queen_state):
         # get fitness according to the rule
@@ -45,12 +54,14 @@ class GA8Queen:
         return np.array(all_parents), np.array(all_fitness)
 
     def record_and_replace(self, all_parents, all_fitness):
+        # record no attack state and replace it in parents
         if 0 in all_fitness:
             zero_position = [i for i, v in enumerate(all_fitness) if v == 0]
             perfect_state = np.unique(all_parents[zero_position], axis=0).tolist()
             for one_state in perfect_state:
                 if one_state not in self.all_state:
                     self.all_state.append(one_state)
+                    print(one_state)
                 else:
                     all_parents = np.delete(all_parents, one_state, axis=0)
                     add_pop = np.vstack([np.random.permutation(self.queen_number) for _ in
@@ -59,6 +70,7 @@ class GA8Queen:
         return all_parents
 
     def crossover(self, parent, all_parents):
+        # crossover between parents
         if np.random.rand() < self.cross_rate:
             i_ = np.random.randint(0, self.pop_size, size=1)
             cross_points = np.random.randint(0, 2, self.queen_number).astype(np.bool)
@@ -66,6 +78,7 @@ class GA8Queen:
         return parent
 
     def mutate(self, child):
+        # mutate in one parent
         for point in range(self.queen_number):
             if np.random.rand() < self.mutate_rate:
                 swap_point = np.random.randint(0, self.queen_number)
@@ -83,8 +96,6 @@ class GA8Queen:
                 child = self.mutate(child)
                 parent[:] = child
             self.pop = all_parents
-            print(self.all_state)
-            print(len(self.all_state))
 
 
 if __name__ == '__main__':
