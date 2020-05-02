@@ -4,7 +4,6 @@ Try some methods for finding shortest path between nodes in a graph
 """
 import numpy as np
 import random
-import math
 
 
 class FindShortestPath:
