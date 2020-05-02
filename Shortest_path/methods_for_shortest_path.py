@@ -26,9 +26,6 @@ class FindShortestPath:
 
 
 
-
-
-
 if __name__ == '__main__':
     # Generate initial map
     matrix = np.random.randint(1, 9, 36).reshape(6, 6)
